@@ -424,3 +424,44 @@ class ChallengeResolveMixin:
         else:
             raise ChallengeUnknownStep(f'ChallengeResolve: Unknown step_name "{step_name}" for "{self.username}" in challenge resolver: {self.last_json}')
         return True
+    
+    def resume_checkpoint(self, code, challenge_url, old_session) 
+        """
+        Resumes an previous Challenge
+
+        Parameters
+        ----------
+        code: str
+            Code informed by user
+        challenge_url : str
+            Challenge URL
+        old_session : Any
+            An array containing headers and cookies, the previous one session data.
+            
+
+        Returns
+        -------
+        bool
+            A boolean value
+        """
+        
+        session = requests.Session()
+        session.verify = False  # fix SSLError/HTTPSConnectionPool
+        session.proxies = self.private.proxies
+        #Set previous challenge page headers
+        session.headers.update(old_session.headers)
+        #Set previous challenge page cookies
+        for key, value in old_session.cookies
+            if key in ["mid", "csrftoken"]:
+                session.cookies.set(key, value)
+                
+        result = session.post(challenge_url, {"security_code": code}).json()
+            result = result.get("challenge", result)
+            if (
+                "Please check the code we sent you and try again"
+                not in (result.get("errors") or [""])[0]
+            ):
+                return False
+        #Challenge submit success
+        return True
+        
