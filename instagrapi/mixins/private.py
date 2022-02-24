@@ -30,7 +30,7 @@ from instagrapi.exceptions import (
 from instagrapi.utils import dumps, generate_signature
 
 
-def manual_input_code(self, username: str, choice=None):
+def manual_input_code(self, username: str, choice=None, challenge_url=None):
     """
     Manual security code helper
 
