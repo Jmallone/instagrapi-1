@@ -186,7 +186,7 @@ class ChallengeResolveMixin:
         ), result
         for retry_code in range(5):
             for attempt in range(1, 11):
-                code = self.challenge_code_handler(self.username, choice)
+                code = self.challenge_code_handler(self.username, choice, challenge_url, session)
                 if code:
                     break
                 time.sleep(WAIT_SECONDS * attempt)
@@ -363,7 +363,7 @@ class ChallengeResolveMixin:
             # IT WAS ME (by GEO)
             self._send_private_request(challenge_url, {"choice": "0"})
             return True
-        elif step_name in ("verify_email", "select_verify_method"):
+        elif step_name in ("verify_email", "select_verify_method", "select_contact_point_recovery"):
             if step_name == "select_verify_method":
                 """
                 {'step_name': 'select_verify_method',
@@ -388,7 +388,7 @@ class ChallengeResolveMixin:
                     raise ChallengeError(f'ChallengeResolve: Choice "email" or "phone_number" (sms) not available to this account {self.last_json}')
             wait_seconds = 5
             for attempt in range(24):
-                code = self.challenge_code_handler(self.username, ChallengeChoice.EMAIL)
+                code = self.challenge_code_handler(self.username, ChallengeChoice.EMAIL, challenge_url)
                 if code:
                     break
                 time.sleep(wait_seconds)
