@@ -30,7 +30,7 @@ from instagrapi.exceptions import (
 from instagrapi.utils import dumps, generate_signature
 
 
-def manual_input_code(self, username: str, choice=None, challenge_url=None):
+def manual_input_code(self, username: str, choice=None, challenge_url=None, session=None):
     """
     Manual security code helper
 
@@ -40,6 +40,10 @@ def manual_input_code(self, username: str, choice=None, challenge_url=None):
         User name of a Instagram account
     choice: optional
         Whether sms or email
+    challenge_url: optional
+        To build a custom challenge handler, we fetch the challenge URL, save in database, with it is possible to "resume" the challenge
+    session: optional
+        To build a custom challenge handler, we fetch session header and cookies, with it is possible to "resume" the challenge
 
     Returns
     -------
