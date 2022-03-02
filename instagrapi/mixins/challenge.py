@@ -465,3 +465,24 @@ class ChallengeResolveMixin:
         #Challenge submit success
         return True
         
+ def send_checkpoint_code(self, code, challenge_url) 
+        """
+        Resumes an previous Challenge Witjout Session
+
+        Parameters
+        ----------
+        code: str
+            Code informed by user
+        challenge_url : str
+            Challenge URL
+
+        Returns
+        -------
+        bool
+            A boolean value
+        """
+        
+        self._send_private_request(challenge_url, {"security_code": code})
+        
+        #Challenge submit success
+        return True
