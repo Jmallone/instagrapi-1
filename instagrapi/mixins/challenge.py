@@ -425,7 +425,7 @@ class ChallengeResolveMixin:
             raise ChallengeUnknownStep(f'ChallengeResolve: Unknown step_name "{step_name}" for "{self.username}" in challenge resolver: {self.last_json}')
         return True
     
-    def resume_checkpoint(self, code, challenge_url, old_session) 
+    def resume_checkpoint(self, code, challenge_url, old_session) -> bool:
         """
         Resumes an previous Challenge
 
@@ -465,7 +465,7 @@ class ChallengeResolveMixin:
         #Challenge submit success
         return True
         
- def send_checkpoint_code(self, code, challenge_url) 
+ def send_checkpoint_code(self, code, challenge_url) -> bool:
         """
         Resumes an previous Challenge Witjout Session
 
