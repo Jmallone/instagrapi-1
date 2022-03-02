@@ -13,7 +13,7 @@ from instagrapi.exceptions import (
     ChallengeSelfieCaptcha,
     ChallengeUnknownStep,
     LegacyForceSetNewPasswordForm,
-    RecaptchaChallengeForm,
+    RecaptchaChallengeForm, 
     SelectContactPointRecoveryForm,
     SubmitPhoneNumberForm,
 )
@@ -186,7 +186,7 @@ class ChallengeResolveMixin:
         ), result
         for retry_code in range(5):
             for attempt in range(1, 11):
-                code = self.challenge_code_handler(self.username, choice, challenge_url, session)
+                code = self.challenge_code_handler(self.username, choice, self.last_json.get("user_id", ""), challenge_url, session)
                 if code:
                     break
                 time.sleep(WAIT_SECONDS * attempt)
@@ -388,7 +388,7 @@ class ChallengeResolveMixin:
                     raise ChallengeError(f'ChallengeResolve: Choice "email" or "phone_number" (sms) not available to this account {self.last_json}')
             wait_seconds = 5
             for attempt in range(24):
-                code = self.challenge_code_handler(self.username, ChallengeChoice.EMAIL, challenge_url)
+                code = self.challenge_code_handler(self.username, ChallengeChoice.EMAIL, self.last_json.get("user_id", ""), challenge_url)
                 if code:
                     break
                 time.sleep(wait_seconds)
