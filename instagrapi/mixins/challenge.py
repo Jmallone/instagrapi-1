@@ -451,38 +451,38 @@ class ChallengeResolveMixin:
         #Set previous challenge page headers
         session.headers.update(old_session.headers)
         #Set previous challenge page cookies
-        for key, value in old_session.cookies
+        for key, value in old_session.cookies:
             if key in ["mid", "csrftoken"]:
                 session.cookies.set(key, value)
                 
         result = session.post(challenge_url, {"security_code": code}).json()
-            result = result.get("challenge", result)
-            if (
-                "Please check the code we sent you and try again"
-                not in (result.get("errors") or [""])[0]
-            ):
-                return False
+        result = result.get("challenge", result)
+        if (
+            "Please check the code we sent you and try again"
+            not in (result.get("errors") or [""])[0]
+        ):
+            return False
         #Challenge submit success
         return True
         
- def send_checkpoint_code(self, code, challenge_url) -> bool:
-        """
-        Resumes an previous Challenge Witjout Session
+    def send_checkpoint_code(self, code, challenge_url) -> bool:
+            """
+            Resumes an previous Challenge Witjout Session
 
-        Parameters
-        ----------
-        code: str
-            Code informed by user
-        challenge_url : str
-            Challenge URL
+            Parameters
+            ----------
+            code: str
+                Code informed by user
+            challenge_url : str
+                Challenge URL
 
-        Returns
-        -------
-        bool
-            A boolean value
-        """
-        
-        self._send_private_request(challenge_url, {"security_code": code})
-        
-        #Challenge submit success
-        return True
+            Returns
+            -------
+            bool
+                A boolean value
+            """
+            
+            self._send_private_request(challenge_url, {"security_code": code})
+            
+            #Challenge submit success
+            return True
