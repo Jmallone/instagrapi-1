@@ -30,7 +30,7 @@ from instagrapi.exceptions import (
 from instagrapi.utils import dumps, generate_signature
 
 
-def manual_input_code(self, username: str, choice=None):
+def manual_input_code(self, username: str, choice=None, code=None):
     """
     Manual security code helper
 
@@ -46,11 +46,12 @@ def manual_input_code(self, username: str, choice=None):
     str
         Code
     """
-    code = None
-    while True:
-        code = input(f"Enter code (6 digits) for {username} ({choice}): ").strip()
-        if code and code.isdigit():
-            break
+    time.sleep(10)
+    if code == None:
+        print("Invalid code")
+        return 3455
+
+    print("Enviando codigo")  
     return code  # is not int, because it can start from 0
 
 
