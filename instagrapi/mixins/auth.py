@@ -247,6 +247,7 @@ class PostLoginFlowMixin:
 class LoginMixin(PreLoginFlowMixin, PostLoginFlowMixin):
     username = None
     password = None
+    code = None
     authorization = ""  # Bearer IGT:2:<base64:authorization_data>
     authorization_data = {}  # decoded authorization header
     last_login = None
@@ -335,7 +336,7 @@ class LoginMixin(PreLoginFlowMixin, PostLoginFlowMixin):
         self.cookie_dict["ds_user_id"] = user.pk
         return True
 
-    def login(self, username: str, password: str, relogin: bool = False, verification_code: str = '') -> bool:
+    def login(self, username: str, password: str, relogin: bool = False, verification_code: str = '', code: str = '') -> bool:
         """
         Login
 
@@ -349,6 +350,8 @@ class LoginMixin(PreLoginFlowMixin, PostLoginFlowMixin):
             Whether or not to re login, default False
         verification_code: str
             2FA verification code
+        code: str
+            verification code from SMS or email
 
         Returns
         -------
@@ -357,6 +360,7 @@ class LoginMixin(PreLoginFlowMixin, PostLoginFlowMixin):
         """
         self.username = username
         self.password = password
+        self.code = code
         self.init()
         if relogin:
             self.private.cookies.clear()
